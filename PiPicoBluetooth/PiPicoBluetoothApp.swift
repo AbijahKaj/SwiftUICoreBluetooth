@@ -11,7 +11,7 @@ import SwiftUI
 struct PiPicoBluetoothApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BluetoothView()
         }
     }
 }

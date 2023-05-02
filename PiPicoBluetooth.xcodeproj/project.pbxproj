@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		8A6AB70C2A012217008C25F3 /* PiPicoBluetoothApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB70B2A012217008C25F3 /* PiPicoBluetoothApp.swift */; };
-		8A6AB70E2A012217008C25F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB70D2A012217008C25F3 /* ContentView.swift */; };
+		8A6AB70E2A012217008C25F3 /* BluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB70D2A012217008C25F3 /* BluetoothView.swift */; };
 		8A6AB7102A01221A008C25F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AB70F2A01221A008C25F3 /* Assets.xcassets */; };
 		8A6AB7132A01221A008C25F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AB7122A01221A008C25F3 /* Preview Assets.xcassets */; };
+		8A6AB71A2A0136D0008C25F3 /* BluetoothViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */; };
+		8A6AB71C2A013778008C25F3 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB71B2A013778008C25F3 /* PeripheralView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8A6AB7082A012217008C25F3 /* PiPicoBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiPicoBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6AB70B2A012217008C25F3 /* PiPicoBluetoothApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiPicoBluetoothApp.swift; sourceTree = "<group>"; };
-		8A6AB70D2A012217008C25F3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8A6AB70D2A012217008C25F3 /* BluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothView.swift; sourceTree = "<group>"; };
 		8A6AB70F2A01221A008C25F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A6AB7122A01221A008C25F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewModel.swift; sourceTree = "<group>"; };
+		8A6AB71B2A013778008C25F3 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +56,9 @@
 			isa = PBXGroup;
 			children = (
 				8A6AB70B2A012217008C25F3 /* PiPicoBluetoothApp.swift */,
-				8A6AB70D2A012217008C25F3 /* ContentView.swift */,
+				8A6AB70D2A012217008C25F3 /* BluetoothView.swift */,
+				8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */,
+				8A6AB71B2A013778008C25F3 /* PeripheralView.swift */,
 				8A6AB70F2A01221A008C25F3 /* Assets.xcassets */,
 				8A6AB7112A01221A008C25F3 /* Preview Content */,
 			);
@@ -137,8 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A6AB70E2A012217008C25F3 /* ContentView.swift in Sources */,
+				8A6AB70E2A012217008C25F3 /* BluetoothView.swift in Sources */,
 				8A6AB70C2A012217008C25F3 /* PiPicoBluetoothApp.swift in Sources */,
+				8A6AB71C2A013778008C25F3 /* PeripheralView.swift in Sources */,
+				8A6AB71A2A0136D0008C25F3 /* BluetoothViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +278,8 @@
 				DEVELOPMENT_TEAM = 8689A382M4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow for discovering permissions";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "To discover bluetooth devices";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +309,8 @@
 				DEVELOPMENT_TEAM = 8689A382M4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow for discovering permissions";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "To discover bluetooth devices";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
