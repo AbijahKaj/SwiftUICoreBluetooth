@@ -20,7 +20,7 @@ class BluetoothViewModel: NSObject, ObservableObject{
     
     @Published var connectedToPeripheral: CBPeripheral?
     
-    @Published var droneAcceleration: AccelerationData = AccelerationData(yaw: 0.0, pitch: 0.0, roll: 0.0)
+    @Published var droneAcceleration: AccelerationData = AccelerationData(yaw: 0.0, pitch: 0.0, roll: 0.0, euler: [])
     
     @Published var errorText = ""
     
@@ -293,4 +293,5 @@ extension Data {
 
 struct AccelerationData: Codable {
     let yaw, pitch, roll: Double
+    let euler: [Double]
 }

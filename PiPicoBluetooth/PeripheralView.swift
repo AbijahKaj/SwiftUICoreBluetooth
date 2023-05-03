@@ -71,6 +71,7 @@ struct DeviceInfo: View{
                 Text("Name: ")
                 Text(peripheralName ?? "unamed")
             }
+            .padding(.top)
             .background(Color.black.opacity(0.7))
             HStack{
                 Text("ID: ")
@@ -117,5 +118,6 @@ struct DeviceInfo: View{
             }
             .background(Color.black.opacity(0.7))
         }
+        .padding()
     }
 }
