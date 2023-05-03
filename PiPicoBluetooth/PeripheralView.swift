@@ -14,11 +14,14 @@ struct PeripheralView: View {
     var peripheral: CBPeripheral!
     var droneAcceleration: AccelerationData
     
+    var errorText: String
+    
     var disconnectAction: () -> Void
     
-    init(peripheral: CBPeripheral!, droneAcceleration: AccelerationData, disconnectAction: @escaping () -> Void) {
+    init(peripheral: CBPeripheral!, droneAcceleration: AccelerationData, errorText: String, disconnectAction: @escaping () -> Void) {
         self.peripheral = peripheral
         self.droneAcceleration = droneAcceleration
+        self.errorText = errorText
         self.disconnectAction = disconnectAction
     }
     
@@ -53,6 +56,12 @@ struct PeripheralView: View {
                         .font(.caption)
                     Text("\(droneAcceleration.yaw)")
                         .font(.caption)
+                }
+                VStack{
+                    Text("Error Text")
+                        .font(.subheadline)
+                    Text("\(errorText)")
+                        .font(.body)
                 }
             }
             Spacer()

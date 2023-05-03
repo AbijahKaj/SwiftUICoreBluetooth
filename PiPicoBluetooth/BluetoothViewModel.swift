@@ -22,6 +22,8 @@ class BluetoothViewModel: NSObject, ObservableObject{
     
     @Published var droneAcceleration: AccelerationData = AccelerationData(yaw: 0.0, pitch: 0.0, roll: 0.0)
     
+    @Published var errorText = ""
+    
     var transferCharacteristic: CBCharacteristic?
     var writeIterationsComplete = 0
     var connectionIterationsComplete = 0
@@ -226,19 +228,21 @@ extension BluetoothViewModel: CBPeripheralDelegate{
             return
         }
         
-        guard let characteristicData = characteristic.value else { return }
+        guard let characteristicData = characteristic.value?.removingTrailingZeros() else { return }
+        let stringData = String(decoding: characteristicData, as: UTF8.self)
         
         do{
-            let droneAcceleration = try JSONDecoder().decode(AccelerationData.self, from: characteristicData.removingTrailingZeros())
+            let droneAcceleration = try JSONDecoder().decode(AccelerationData.self, from: characteristicData)
             
-            // os_log("Received %d bytes: %s", characteristicData.count, "\(String(describing: droneAcceleration))")
+            os_log("Received %d bytes: %s", characteristicData.count, stringData)
             
-            self.droneAcceleration = droneAcceleration;
+            self.droneAcceleration = droneAcceleration
             
-            self.data.append(characteristicData)
+            //self.data.append(characteristicData)
 
         } catch let error {
-            os_log("Error %s \n ---- with data %s", String(describing: error))
+            self.errorText = stringData
+            os_log("Error %s \n ---- with data %s", String(describing: error), stringData)
         }
     }
 
