@@ -20,7 +20,7 @@ class BluetoothViewModel: NSObject, ObservableObject{
     
     @Published var connectedToPeripheral: CBPeripheral?
     
-    @Published var receivedText = ""
+    @Published var droneAcceleration: AccelerationData = AccelerationData(yaw: 0.0, pitch: 0.0, roll: 0.0)
     
     var transferCharacteristic: CBCharacteristic?
     var writeIterationsComplete = 0
@@ -108,13 +108,13 @@ extension BluetoothViewModel: CBCentralManagerDelegate{
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Reject if the signal strength is too low to attempt data transfer.
         // Change the minimum RSSI value depending on your app’s use case.
-        guard RSSI.intValue >= -50
+        guard RSSI.intValue >= -80
             else {
-                os_log("Discovered perhiperal not in expected range, at %d", RSSI.intValue)
+                //os_log("Discovered perhiperal not in expected range, at %d", RSSI.intValue)
                 return
         }
         
-        os_log("Discovered %s at %d", String(describing: peripheral.name), RSSI.intValue)
+        //os_log("Discovered %s at %d", String(describing: peripheral.name), RSSI.intValue)
         
         if connectedToPeripheral != peripheral && !peripherals.contains(peripheral) {
             self.peripherals.append(peripheral)
@@ -226,24 +226,19 @@ extension BluetoothViewModel: CBPeripheralDelegate{
             return
         }
         
-        guard let characteristicData = characteristic.value,
-            let stringFromData = String(data: characteristicData, encoding: .utf8) else { return }
+        guard let characteristicData = characteristic.value else { return }
         
-        os_log("Received %d bytes: %s", characteristicData.count, stringFromData)
-        
-       self.receivedText = stringFromData
-        
-        
-        // Have we received the end-of-message token?
-        if stringFromData == "EOM" {
-            // End-of-message case: show the data.
-            self.receivedText = String(data: self.data, encoding: .utf8) ?? ""
+        do{
+            let droneAcceleration = try JSONDecoder().decode(AccelerationData.self, from: characteristicData.removingTrailingZeros())
             
-            // Write test data
-            writeData()
-        } else {
-            // Otherwise, just append the data to what we have previously received.
-            data.append(characteristicData)
+            // os_log("Received %d bytes: %s", characteristicData.count, "\(String(describing: droneAcceleration))")
+            
+            self.droneAcceleration = droneAcceleration;
+            
+            self.data.append(characteristicData)
+
+        } catch let error {
+            os_log("Error %s \n ---- with data %s", String(describing: error))
         }
     }
 
@@ -278,4 +273,20 @@ extension BluetoothViewModel: CBPeripheralDelegate{
         os_log("Peripheral is ready, send data")
         writeData()
     }
+}
+
+
+extension Data {
+    func removingTrailingZeros() -> Data {
+        guard !isEmpty else { return self }
+        
+        var lastValidIndex = index(before: endIndex)
+        while self[lastValidIndex] == 0 { lastValidIndex = index(before:  lastValidIndex)}
+        
+        return self[startIndex...lastValidIndex]
+    }
+}
+
+struct AccelerationData: Codable {
+    let yaw, pitch, roll: Double
 }

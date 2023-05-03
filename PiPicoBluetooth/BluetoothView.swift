@@ -14,7 +14,7 @@ struct BluetoothView: View {
     var body: some View {
         NavigationView{
             if(bluetoothViewModel.connectedToPeripheral != nil){
-                PeripheralView(peripheral: bluetoothViewModel.connectedToPeripheral, receivedText: bluetoothViewModel.receivedText, disconnectAction: {
+                PeripheralView(peripheral: bluetoothViewModel.connectedToPeripheral, droneAcceleration: bluetoothViewModel.droneAcceleration, disconnectAction: {
                     bluetoothViewModel.disconnectFromPeripheral(bluetoothViewModel.connectedToPeripheral!)
                 })
             }else{

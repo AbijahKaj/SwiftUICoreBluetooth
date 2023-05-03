@@ -12,13 +12,13 @@ import CoreBluetooth
 
 struct PeripheralView: View {
     var peripheral: CBPeripheral!
-    var receivedText: String = ""
+    var droneAcceleration: AccelerationData
     
     var disconnectAction: () -> Void
     
-    init(peripheral: CBPeripheral!, receivedText: String, disconnectAction: @escaping () -> Void) {
+    init(peripheral: CBPeripheral!, droneAcceleration: AccelerationData, disconnectAction: @escaping () -> Void) {
         self.peripheral = peripheral
-        self.receivedText = receivedText
+        self.droneAcceleration = droneAcceleration
         self.disconnectAction = disconnectAction
     }
     
@@ -36,9 +36,24 @@ struct PeripheralView: View {
             VStack{
                 Text("Data")
                     .font(.headline)
-                Text(receivedText)
-                    .font(.body)
-                    .frame(height: 300)
+                HStack{
+                    Text("Pitch: ")
+                        .font(.caption)
+                    Text("\(droneAcceleration.pitch)")
+                        .font(.caption)
+                }
+                HStack{
+                    Text("Roll: ")
+                        .font(.caption)
+                    Text("\(droneAcceleration.roll)")
+                        .font(.caption)
+                }
+                HStack{
+                    Text("Yaw: ")
+                        .font(.caption)
+                    Text("\(droneAcceleration.yaw)")
+                        .font(.caption)
+                }
             }
             Spacer()
             Button{
