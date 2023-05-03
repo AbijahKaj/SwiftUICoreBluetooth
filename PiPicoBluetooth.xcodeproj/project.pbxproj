@@ -13,7 +13,7 @@
 		8A6AB7132A01221A008C25F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AB7122A01221A008C25F3 /* Preview Assets.xcassets */; };
 		8A6AB71A2A0136D0008C25F3 /* BluetoothViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */; };
 		8A6AB71C2A013778008C25F3 /* PeripheralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB71B2A013778008C25F3 /* PeripheralView.swift */; };
-		8A6AB71E2A01E72C008C25F3 /* BluetoothViewModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AB71D2A01E72C008C25F3 /* BluetoothViewModel+Extension.swift */; };
+		8AC2082E2A029C6100FA3AA3 /* TestScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 8AC2082D2A029C6100FA3AA3 /* TestScene.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		8A6AB7122A01221A008C25F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewModel.swift; sourceTree = "<group>"; };
 		8A6AB71B2A013778008C25F3 /* PeripheralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralView.swift; sourceTree = "<group>"; };
-		8A6AB71D2A01E72C008C25F3 /* BluetoothViewModel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BluetoothViewModel+Extension.swift"; sourceTree = "<group>"; };
+		8AC2082D2A029C6100FA3AA3 /* TestScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = TestScene.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +60,8 @@
 				8A6AB70B2A012217008C25F3 /* PiPicoBluetoothApp.swift */,
 				8A6AB70D2A012217008C25F3 /* BluetoothView.swift */,
 				8A6AB7192A0136D0008C25F3 /* BluetoothViewModel.swift */,
-				8A6AB71D2A01E72C008C25F3 /* BluetoothViewModel+Extension.swift */,
 				8A6AB71B2A013778008C25F3 /* PeripheralView.swift */,
+				8AC2082D2A029C6100FA3AA3 /* TestScene.scn */,
 				8A6AB70F2A01221A008C25F3 /* Assets.xcassets */,
 				8A6AB7112A01221A008C25F3 /* Preview Content */,
 			);
@@ -136,6 +136,7 @@
 			files = (
 				8A6AB7132A01221A008C25F3 /* Preview Assets.xcassets in Resources */,
 				8A6AB7102A01221A008C25F3 /* Assets.xcassets in Resources */,
+				8AC2082E2A029C6100FA3AA3 /* TestScene.scn in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +148,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A6AB70E2A012217008C25F3 /* BluetoothView.swift in Sources */,
-				8A6AB71E2A01E72C008C25F3 /* BluetoothViewModel+Extension.swift in Sources */,
 				8A6AB70C2A012217008C25F3 /* PiPicoBluetoothApp.swift in Sources */,
 				8A6AB71C2A013778008C25F3 /* PeripheralView.swift in Sources */,
 				8A6AB71A2A0136D0008C25F3 /* BluetoothViewModel.swift in Sources */,

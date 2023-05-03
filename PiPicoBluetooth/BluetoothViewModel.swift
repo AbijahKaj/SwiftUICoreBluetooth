@@ -34,7 +34,7 @@ class BluetoothViewModel: NSObject, ObservableObject{
     
     override init() {
         super.init()
-        self.centralManager = CBCentralManager(delegate: self, queue: .main, options: [CBCentralManagerOptionShowPowerAlertKey: true])
+        self.centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }
     
     func connectToPeripheral(_ peripheral: CBPeripheral) {
@@ -234,11 +234,11 @@ extension BluetoothViewModel: CBPeripheralDelegate{
         do{
             let droneAcceleration = try JSONDecoder().decode(AccelerationData.self, from: characteristicData)
             
-            os_log("Received %d bytes: %s", characteristicData.count, stringData)
+            //os_log("Received %d bytes: %s", characteristicData.count, stringData)
             
             self.droneAcceleration = droneAcceleration
             
-            //self.data.append(characteristicData)
+            self.data.append(characteristicData)
 
         } catch let error {
             self.errorText = stringData

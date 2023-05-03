@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreBluetooth
-
+import SceneKit
 
 
 struct PeripheralView: View {
@@ -18,6 +18,8 @@ struct PeripheralView: View {
     
     var disconnectAction: () -> Void
     
+    @StateObject var coordinator = SceneCoordinator()
+    
     init(peripheral: CBPeripheral!, droneAcceleration: AccelerationData, errorText: String, disconnectAction: @escaping () -> Void) {
         self.peripheral = peripheral
         self.droneAcceleration = droneAcceleration
@@ -26,15 +28,55 @@ struct PeripheralView: View {
     }
     
     var body: some View {
+        ZStack{
+            SceneView(
+                scene: coordinator.scene,
+                pointOfView: coordinator.cameraNode,
+                options: [.allowsCameraControl],
+                delegate: coordinator
+            )
+            .ignoresSafeArea(.all)
+            DeviceInfo(droneAcceleration: droneAcceleration, peripheralIdentifier: peripheral.identifier, errorText: errorText, disconnectAction: disconnectAction)
+        }
+    }
+}
+
+class SceneCoordinator: NSObject, SCNSceneRendererDelegate, ObservableObject {
+    
+    var showsStatistics: Bool = false
+    var debugOptions: SCNDebugOptions = []
+    
+    var scene = SCNScene(named: "TestScene.scn")
+    var cameraNode: SCNNode? {
+        scene?.rootNode.childNode(withName: "camera", recursively: false)
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        //renderer.showsStatistics = self.showsStatistics
+        //renderer.debugOptions = self.debugOptions
+    }
+}
+
+struct DeviceInfo: View{
+    
+    var droneAcceleration: AccelerationData
+    var peripheralName: String?
+    var peripheralIdentifier: UUID
+    var errorText: String
+    var disconnectAction: () -> Void
+    
+    var body: some View {
         VStack{
             HStack{
                 Text("Name: ")
-                Text(peripheral.name ?? "unamed")
+                Text(peripheralName ?? "unamed")
             }
+            .background(Color.black.opacity(0.7))
             HStack{
                 Text("ID: ")
-                Text("\(peripheral.identifier)")
+                Text("\(peripheralIdentifier)")
             }
+            .background(Color.black.opacity(0.7))
             Spacer()
             VStack{
                 Text("Data")
@@ -57,19 +99,23 @@ struct PeripheralView: View {
                     Text("\(droneAcceleration.yaw)")
                         .font(.caption)
                 }
-                VStack{
-                    Text("Error Text")
-                        .font(.subheadline)
-                    Text("\(errorText)")
-                        .font(.body)
+                if errorText != "" {
+                    VStack{
+                        Text("Error Text")
+                            .font(.subheadline)
+                        Text("\(errorText)")
+                            .font(.body)
+                    }
                 }
             }
+            .background(Color.black.opacity(0.7))
             Spacer()
             Button{
                 disconnectAction()
             } label: {
                 Text("Disconnect")
             }
+            .background(Color.black.opacity(0.7))
         }
     }
 }
