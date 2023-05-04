@@ -47,6 +47,15 @@ class BluetoothViewModel: NSObject, ObservableObject{
         self.centralManager?.cancelPeripheralConnection(peripheral)
     }
     
+    func toggleConnection(){
+        if connectedToPeripheral != nil {
+            cleanup()
+            connectedToPeripheral = nil
+        } else if !peripherals.isEmpty {
+            connectToPeripheral(peripherals.first!)
+        }
+    }
+    
     private func cleanup() {
         // Don't do anything if we're not connected
         guard let discoveredPeripheral = connectedToPeripheral,
@@ -63,6 +72,7 @@ class BluetoothViewModel: NSObject, ObservableObject{
         
         // If we've gotten this far, we're connected, but we're not subscribed, so we just disconnect
         centralManager?.cancelPeripheralConnection(discoveredPeripheral)
+        self.connectedToPeripheral = nil
     }
     
     /*
@@ -103,20 +113,20 @@ class BluetoothViewModel: NSObject, ObservableObject{
 extension BluetoothViewModel: CBCentralManagerDelegate{
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
-            self.centralManager?.scanForPeripherals(withServices: nil)
+            self.centralManager?.scanForPeripherals(withServices: [TransferService.serviceUUID])
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // Reject if the signal strength is too low to attempt data transfer.
         // Change the minimum RSSI value depending on your app’s use case.
-        guard RSSI.intValue >= -80
+        guard RSSI.intValue >= -70
             else {
                 //os_log("Discovered perhiperal not in expected range, at %d", RSSI.intValue)
                 return
         }
         
-        //os_log("Discovered %s at %d", String(describing: peripheral.name), RSSI.intValue)
+        os_log("Discovered %s at %d", String(describing: peripheral.name), RSSI.intValue)
         
         if connectedToPeripheral != peripheral && !peripherals.contains(peripheral) {
             self.peripherals.append(peripheral)
@@ -150,7 +160,7 @@ extension BluetoothViewModel: CBCentralManagerDelegate{
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         os_log("Perhiperal Disconnected")
         self.connectedToPeripheral = nil
-        self.centralManager?.scanForPeripherals(withServices: nil)
+        self.centralManager?.scanForPeripherals(withServices: [TransferService.serviceUUID])
     }
     
     /*
@@ -163,7 +173,7 @@ extension BluetoothViewModel: CBCentralManagerDelegate{
     
 }
 
-extension BluetoothViewModel: CBPeripheralDelegate{
+extension BluetoothViewModel: CBPeripheralDelegate {
     /*
      *  The peripheral letting us know when services have been invalidated.
      */
@@ -239,6 +249,9 @@ extension BluetoothViewModel: CBPeripheralDelegate{
             self.droneAcceleration = droneAcceleration
             
             self.data.append(characteristicData)
+            
+            // Clear previous error
+            self.errorText = ""
 
         } catch let error {
             self.errorText = stringData
@@ -291,7 +304,7 @@ extension Data {
     }
 }
 
-struct AccelerationData: Codable {
+struct AccelerationData: Codable, Equatable {
     let yaw, pitch, roll: Double
     let euler: [Double]
 }
